@@ -4,6 +4,7 @@ import customResponse from "../../Utils/customResponse.js";
 import AuthService from "../../Services/AuthService.js";
 
 const AuthController = {
+    // Register User
     async register(req: Request, res: Response, next: NextFunction) {
         try {
             const user = await AuthService.register(req.body);
@@ -17,6 +18,7 @@ const AuthController = {
         }
     },
 
+    // Login User
     async login(req: Request, res: Response, next: NextFunction) {
         try {
             const result = await AuthService.login(req.body);
@@ -30,6 +32,7 @@ const AuthController = {
         }
     },
 
+    // Get Authenticated User
     async me(req: Request, res: Response, next: NextFunction) {
         try {
             const user = await AuthService.me(req.user!.id);
@@ -41,6 +44,32 @@ const AuthController = {
             next(error);
         }
     },
+
+    // Refresh Token
+    async refreshToken(req: Request, res: Response, next: NextFunction) {
+        try {
+            const { refreshToken } = req.body;
+            const result = await AuthService.refreshToken(refreshToken);
+            return customResponse.success(req, res, {
+                message: "Token refreshed successfully",
+                result,
+            });
+        } catch (error) {
+            next(error);
+        }
+    },
+
+    // Logout User
+    async logout(req: Request, res: Response, next: NextFunction) {
+        try {
+            await AuthService.logout(req.user!.id);
+            return customResponse.success(req, res, {
+                message: "Logout successful",
+            });
+        } catch (error) {
+            next(error);
+        }
+    }
     
 };
 
