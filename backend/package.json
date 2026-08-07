@@ -7,13 +7,15 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "tsx watch app.ts",
     "build": "tsc",
-    "start": "node dist/app.js"
+    "start": "node dist/app.js",
+    "studio": "prisma studio"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "module",
   "dependencies": {
+    "@prisma/adapter-pg": "^7.9.1",
     "@prisma/client": "^7.9.1",
     "bcrypt": "^6.0.0",
     "cors": "^2.8.6",
@@ -23,6 +25,7 @@
     "jsonwebtoken": "^9.0.3",
     "morgan": "^1.11.0",
     "multer": "^2.2.0",
+    "pg": "^8.22.0",
     "zod": "^4.4.3"
   },
   "devDependencies": {
@@ -34,8 +37,9 @@
     "@types/morgan": "^1.9.10",
     "@types/multer": "^2.2.0",
     "@types/node": "^26.1.2",
+    "@types/pg": "^8.20.4",
+    "prisma": "^7.9.1",
     "tsx": "^4.23.9",
-    "typescript": "^7.0.2",
-    "prisma": "^7.9.1"
+    "typescript": "^7.0.2"
   }
 }
