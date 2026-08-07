@@ -17,11 +17,31 @@ const AuthController = {
         }
     },
 
-    async login(req: Request, res: Response) {
-        return customResponse.success(req, res, {
-            message: "Login API coming soon",
-        });
+    async login(req: Request, res: Response, next: NextFunction) {
+        try {
+            const result = await AuthService.login(req.body);
+            return customResponse.success(req, res, {
+                statusCode: HTTP_STATUS.OK,
+                message: "Login successful",
+                result,
+            });
+        } catch (error) {
+            next(error);
+        }
     },
+
+    async me(req: Request, res: Response, next: NextFunction) {
+        try {
+            const user = await AuthService.me(req.user!.id);
+            return customResponse.success(req, res, {
+                message: "Authenticated user",
+                result: user,
+            });
+        } catch (error) {
+            next(error);
+        }
+    },
+    
 };
 
 export default AuthController;

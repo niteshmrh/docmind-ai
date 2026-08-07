@@ -9,6 +9,8 @@ const env = {
   APP_NAME: process.env.APP_NAME || "DocMind AI",
   API_PREFIX: process.env.API_PREFIX || "/api/v1",
   DATABASE_URL: process.env.DATABASE_URL || "postgresql://postgres:postgres@localhost:5432/docmind_ai",
+  TOKEN_SECRET: process.env.TOKEN_SECRET || "Nitesh_Kumar",
+  TOKEN_SECRETEXPIRES_IN: process.env.TOKEN_SECRETEXPIRES_IN || "1d"
 };
 
 export default env;
