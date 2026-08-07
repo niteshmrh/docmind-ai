@@ -50,3 +50,10 @@ Thumbs.db
 
 # Misc
 *.zip
+
+
+# AI Editors
+.agents/
+skills-lock.json
+AGENTS.md
+CLAUDE.md
