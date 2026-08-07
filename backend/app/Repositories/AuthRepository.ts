@@ -1,9 +1,10 @@
-import prisma from "../../config/database.js";
-
+import { getDatabase } from "../../config/database.js";
 import type { RegisterRequest } from "../Http/Requests/auth.request.js";
 
+const prisma = getDatabase();
+
 const AuthRepository = {
-    async findByEmail(email: string) {
+    async findByEmail(email: string, db: "db1" | "db2" = "db1") {
         return prisma.user.findUnique({
             where: {
                 email,
