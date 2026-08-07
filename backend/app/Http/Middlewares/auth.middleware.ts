@@ -1,4 +1,5 @@
 import type { NextFunction, Request, Response, } from "express";
+import jwt from "jsonwebtoken";
 
 import jwtUtil from "../../Utils/jwt.js";
 import ApiError from "../../Utils/ApiError.js";
@@ -23,6 +24,12 @@ export default function authMiddleware(req: Request, res: Response, next: NextFu
         // (req as Request & { user: JwtPayload }).user = payload;
         next();
     } catch (error) {
+        if (error instanceof jwt.TokenExpiredError) {
+            return next(new ApiError("Access token expired", HTTP_STATUS.UNAUTHORIZED, "TOKEN_EXPIRED"));
+        }
+        if (error instanceof jwt.JsonWebTokenError) {
+            return next(new ApiError("Invalid access token", HTTP_STATUS.UNAUTHORIZED, "INVALID_TOKEN"));
+        }
         next(error);
     }
 }

@@ -5,6 +5,7 @@ import LocalStorageService from "./Storage/LocalStorageService.js";
 import DocumentRepository from "../Repositories/DocumentRepository.js";
 import ApiError from "../Utils/ApiError.js";
 import HTTP_STATUS from "../Utils/httpStatus.js";
+import DocumentProcessingService from "./DocumentProcessing/DocumentProcessingService.js";
 
 const storage = new LocalStorageService();
 
@@ -13,7 +14,7 @@ const DocumentService = {
     // Upload a document for a user
     async upload(userId: string, file: Express.Multer.File) {
         const savedPath = await storage.save(file);
-        return DocumentRepository.create({
+        const document =  await DocumentRepository.create({
             userId,
             originalName: file.originalname,
             fileName: file.filename,
@@ -24,6 +25,9 @@ const DocumentService = {
             status: "READY",
             type: path.extname(file.originalname).replace(".", "").toUpperCase(),
         });
+        await DocumentProcessingService.process(document.id);
+        // return document;
+        return DocumentRepository.findById(document.id);
     },
 
     // List all documents for a user
@@ -32,18 +36,18 @@ const DocumentService = {
     },
 
     // Get a document by its ID
-    async get(id: string) {
+    async get(id: string, userId: string) {
         const document = await DocumentRepository.findById(id);
-        if (!document) {
+        if (!document || document.userId !== userId) {
             throw new ApiError("Document not found", HTTP_STATUS.NOT_FOUND, "DOCUMENT_NOT_FOUND");
         }
         return document;
     },
 
     // Delete a document by its ID
-    async delete(id: string) {
+    async delete(id: string,  userId: string) {
         const document = await DocumentRepository.findById(id);
-        if (!document) {
+        if (!document || document.userId !== userId) {
             throw new ApiError("Document not found", HTTP_STATUS.NOT_FOUND, "DOCUMENT_NOT_FOUND");
         }
         try {

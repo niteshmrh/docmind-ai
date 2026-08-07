@@ -51,8 +51,101 @@ const DocumentRepository = {
                 originalName,
             },
         });
-    }
+    },
 
+    // Update the content of a document by its ID
+    // async updateContent(id: string, content: string) {
+    //     await prisma.document.update({
+    //         where: {
+    //             id,
+    //         },
+    //         data: {
+    //             status: "READY",
+    //         },
+    //     });
+
+    //     return prisma.documentAnalysis.upsert({
+    //         where: {
+    //             documentId: id,
+    //         },
+    //         update: {
+    //             content,
+    //             processedAt: new Date(),
+    //             errorMessage: null,
+    //         },
+    //         create: {
+    //             documentId: id,
+    //             content,
+    //             processedAt: new Date(),
+    //         },
+    //     });
+    // },
+
+    // Mark a document as failed by its ID
+    // async markFailed(id: string, message: string) {
+
+    //     await prisma.document.update({
+    //         where: {
+    //             id,
+    //         },
+    //         data: {
+    //             status: "FAILED",
+    //         },
+    //     });
+
+    //     return prisma.documentAnalysis.upsert({
+    //         where: {
+    //             documentId: id,
+    //         },
+    //         update: {
+    //             errorMessage: message,
+    //         },
+    //         create: {
+    //             documentId: id,
+    //             errorMessage: message,
+    //         },
+    //     });
+    // },
+
+    // Update the content of a document by its ID
+    async updateContent(id: string, content: string) {
+        return prisma.document.update({
+            where: {
+                id,
+            },
+            data: {
+                content,
+                processedAt: new Date(),
+                status: "READY",
+                errorMessage: null,
+            },
+        });
+    },
+
+    // Mark a document as failed by its ID
+    async markFailed(id: string, message: string) {
+        return prisma.document.update({
+            where: {
+                id,
+            },
+            data: {
+                status: "FAILED",
+                errorMessage: message,
+            },
+        });
+    },
+
+    // Update the status of a document by its ID
+    async updateStatus(id: string, status: "PROCESSING" | "READY" | "FAILED",) {
+        return prisma.document.update({
+            where: {
+                id,
+            },
+            data: {
+                status,
+            },
+        });
+    },
 };
 
 export default DocumentRepository;
