@@ -25,6 +25,31 @@ const AuthRepository = {
             },
         });
     },
+
+    async findByEmailWithPassword(email: string){
+        return prisma.user.findUnique({
+            where: {
+                email,
+            },
+        });
+    },
+
+    async findById(id: string) {
+        return prisma.user.findUnique({
+            where: {
+                id,
+            },
+            select: {
+                id: true,
+                name: true,
+                email: true,
+                role: true,
+                isVerified: true,
+                createdAt: true,
+                updatedAt: true,
+            },
+        });
+    },
 };
 
 export default AuthRepository;
