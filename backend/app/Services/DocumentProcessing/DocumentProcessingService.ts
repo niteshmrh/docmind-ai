@@ -2,8 +2,10 @@ import DocumentRepository from "../../Repositories/DocumentRepository.js";
 import ApiError from "../../Utils/ApiError.js";
 import HTTP_STATUS from "../../Utils/httpStatus.js";
 import ProcessorFactory from "./ProcessorFactory.js";
+import ChunkService from "../Chunking/ChunkService.js";
 
 const DocumentProcessingService = {
+
     async process(documentId: string) {
         const document = await DocumentRepository.findById(documentId);
         if (!document) {
@@ -16,6 +18,7 @@ const DocumentProcessingService = {
             const processor = ProcessorFactory.create(document.type);
             const content = await processor.extractText(document.path);
             await DocumentRepository.updateContent(document.id,content,);
+            await ChunkService.process(document.id, content);
         } catch (error) {
             await DocumentRepository.markFailed(
                 document.id, 
@@ -24,6 +27,7 @@ const DocumentProcessingService = {
             throw error;
         }
     },
+    
 };
 
 export default DocumentProcessingService;
