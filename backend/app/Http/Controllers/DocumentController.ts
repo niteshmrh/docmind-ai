@@ -44,7 +44,7 @@ const DocumentController = {
     // Get a document by its ID
     async get(req: Request<{ id: string }>, res: Response, next: NextFunction) {
         try {
-            const document = await DocumentService.get(req.params.id);
+            const document = await DocumentService.get(req.params.id, req.user!.id);
             return customResponse.success(req, res, {
                 message: "Document fetched successfully",
                 result: document,
@@ -57,7 +57,7 @@ const DocumentController = {
     // Delete a document by its ID
     async delete(req: Request<{ id: string }>, res: Response, next: NextFunction) {
         try {
-            await DocumentService.delete(req.params.id);
+            await DocumentService.delete(req.params.id, req.user!.id);
             return customResponse.success(req, res, {
                 message: "Document deleted successfully",
             });

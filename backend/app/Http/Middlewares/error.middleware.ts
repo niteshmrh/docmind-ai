@@ -12,7 +12,7 @@ export default function errorMiddleware(error: Error, req: Request, res: Respons
             errorKey: error.errorKey,
         });
     }
-    console.log(error);
+    // console.log(error);
 
     return customResponse.error(req, res, {
         statusCode: HTTP_STATUS.INTERNAL_SERVER_ERROR,
