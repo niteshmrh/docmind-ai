@@ -27,6 +27,8 @@ model User {
   role        UserRole  @default(USER)
   isVerified  Boolean   @default(false)
 
+  documents Document[]
+
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 }
@@ -48,7 +50,6 @@ enum DocumentType {
 }
 
 model Document {
-
   id            String   @id @default(cuid())
   userId        String
 
@@ -58,9 +59,8 @@ model Document {
   extension     String
   size          Int
 
-
   path          String
-  status        DocumentStatus @default(UPLOADING)ß
+  status        DocumentStatus @default(UPLOADING)
   type          DocumentType
 
   createdAt     DateTime @default(now())
