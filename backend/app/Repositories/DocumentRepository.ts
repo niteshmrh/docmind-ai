@@ -153,6 +153,24 @@ const DocumentRepository = {
             data,
         });
     },
+
+    // find the chunks
+    async findChunks(documentId: string) {
+        return prisma.documentChunk.findMany({
+            where: {
+                documentId,
+            },
+            orderBy: {
+                chunkIndex: "asc",
+            },
+        });
+    },
+
+    async updateEmbedding(chunkId: string, embedding: number[]) {
+        const vector = `[${embedding.join(",")}]`;
+        // await prisma.$executeRawUnsafe(`UPDATE "DocumentChunk" SET embedding = '${vector}'::vector WHERE id = '${chunkId}'`);
+        await prisma.$executeRaw`UPDATE "DocumentChunk" SET embedding = ${`[${embedding.join(",")}]`}::vector WHERE id = ${chunkId}`;
+    },
 };
 
 export default DocumentRepository;

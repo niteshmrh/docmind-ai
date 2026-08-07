@@ -82,6 +82,8 @@ model DocumentChunk {
   content    String
   tokens     Int
 
+  embedding  Unsupported("vector(768)")?
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

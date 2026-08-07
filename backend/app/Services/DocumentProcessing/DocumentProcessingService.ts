@@ -3,6 +3,7 @@ import ApiError from "../../Utils/ApiError.js";
 import HTTP_STATUS from "../../Utils/httpStatus.js";
 import ProcessorFactory from "./ProcessorFactory.js";
 import ChunkService from "../Chunking/ChunkService.js";
+import EmbeddingService from "../Embedding/EmbeddingService.js";
 
 const DocumentProcessingService = {
 
@@ -19,6 +20,7 @@ const DocumentProcessingService = {
             const content = await processor.extractText(document.path);
             await DocumentRepository.updateContent(document.id,content,);
             await ChunkService.process(document.id, content);
+            await EmbeddingService.process(document.id);
         } catch (error) {
             await DocumentRepository.markFailed(
                 document.id, 
