@@ -146,6 +146,13 @@ const DocumentRepository = {
             },
         });
     },
+
+    // Create Chunks for AI
+    async createChunks(data: {documentId: string; chunkIndex: number; content: string; tokens: number; }[]) {
+        return prisma.documentChunk.createMany({
+            data,
+        });
+    },
 };
 
 export default DocumentRepository;
