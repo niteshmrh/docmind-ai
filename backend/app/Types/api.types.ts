@@ -5,3 +5,7 @@ export interface ResponseOptions<T = unknown> {
     totalCount?: number;
     errorKey?: string;
 }
+
+export interface IdParams {
+    id: string;
+}
