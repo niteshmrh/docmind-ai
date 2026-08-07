@@ -1,23 +1,7 @@
-export interface ApiResponse<T = unknown> {
-    statusCode: number;
-    message: string;
-    status: boolean;
-    result?: T | null;
-    totalCount?: number;
-    responseId?: string;
-    type?: string;
-    actionType?: string;
-    errorKey?: string;
-}
-
-export interface Pagination {
-    page: number;
-    limit: number;
-    total: number;
-}
-
-export interface JwtPayload {
-    id: string;
-    email: string;
-    role: string;
-}
+export * from "./api.types.js";
+export * from "./auth.types.js";
+export * from "./common.types.js";
+// export * from "./user.types.js";
+// export * from "./document.types.js";
+// export * from "./chat.types.js";
+// export * from "./ai.types.js";
