@@ -44,14 +44,27 @@ const AuthService = {
             throw new ApiError("Invalid email or password", HTTP_STATUS.UNAUTHORIZED, "INVALID_CREDENTIALS");
         }
 
-        const accessToken = jwtUtil.generateAccessToken({
+        const payload = {
             id: user.id,
             email: user.email,
             role: user.role,
-        });
+        };
+
+        // const accessToken = jwtUtil.generateAccessToken({
+        //     id: user.id,
+        //     email: user.email,
+        //     role: user.role,
+        // });
+
+        const accessToken = jwtUtil.generateAccessToken(payload);
+
+        const refreshToken = jwtUtil.generateRefreshToken(payload);
+
+        await AuthRepository.updateRefreshToken(user.id,refreshToken);
 
         return {
             accessToken,
+            refreshToken,
             user: {
                 id: user.id,
                 name: user.name,
@@ -71,6 +84,36 @@ const AuthService = {
         }
         return user;
     },
+
+    // refresh token
+    async refreshToken(refreshToken: string) {
+        const payload = jwtUtil.verifyRefreshToken(refreshToken);
+        const user = await AuthRepository.findByRefreshToken(refreshToken);
+        if (!user) {
+            throw new ApiError("Invalid refresh token", HTTP_STATUS.UNAUTHORIZED, "INVALID_REFRESH_TOKEN");
+        }
+
+        const newPayload = {
+            id: user.id,
+            email: user.email,
+            role: user.role,
+        };
+
+        const accessToken = jwtUtil.generateAccessToken(newPayload);
+        const newRefreshToken = jwtUtil.generateRefreshToken(newPayload);
+        await AuthRepository.updateRefreshToken(user.id,newRefreshToken);
+
+        return {
+            accessToken,
+            refreshToken: newRefreshToken,
+        };
+    },
+
+    // Logout User
+    async logout(userId: string) {
+        await AuthRepository.updateRefreshToken(userId, null);
+        return true;
+    }
 };
 
 export default AuthService;

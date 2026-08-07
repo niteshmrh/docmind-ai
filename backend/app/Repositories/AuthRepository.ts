@@ -50,6 +50,28 @@ const AuthRepository = {
             },
         });
     },
+
+    async updateRefreshToken(id: string, refreshToken: string | null,) {
+        return prisma.user.update({
+            where: {
+                id,
+            },
+            data: {
+                refreshToken,
+            },
+            select: {
+                id: true,
+            },
+        });
+    },
+
+    async findByRefreshToken(refreshToken: string) {
+        return prisma.user.findFirst({
+            where: {
+                refreshToken,
+            },
+        });
+    },
 };
 
 export default AuthRepository;
