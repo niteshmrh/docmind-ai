@@ -7,8 +7,8 @@ class SearchController {
 
     async search(req: Request, res: Response, next: NextFunction) {
         try {
-            const { query, limit } = req.body;
-            const result = await SearchService.search(query,limit,);
+            const { documentId, query, limit } = req.body;
+            const result = await SearchService.search(documentId, query,limit,);
             return customResponse.success(req, res, {
                 message: "Search completed successfully",
                 result,
