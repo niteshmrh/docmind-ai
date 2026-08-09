@@ -3,9 +3,9 @@ import SearchRepository from "../../Repositories/SearchRepository.js";
 
 const SearchService = {
 
-    async search(query: string, limit = 5) {
+    async search(documentId: string, query: string, limit = 5) {
         const embedding = await OllamaService.embedding(query);
-        return SearchRepository.similaritySearch(embedding, limit,);
+        return SearchRepository.similaritySearch(documentId, embedding, limit,);
     },
 
 };
