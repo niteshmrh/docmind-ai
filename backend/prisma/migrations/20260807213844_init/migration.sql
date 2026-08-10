@@ -43,6 +43,8 @@ CREATE TABLE "Document" (
     CONSTRAINT "Document_pkey" PRIMARY KEY ("id")
 );
 
+CREATE EXTENSION IF NOT EXISTS vector;
+
 -- CreateTable
 CREATE TABLE "DocumentChunk" (
     "id" TEXT NOT NULL,
@@ -50,6 +52,7 @@ CREATE TABLE "DocumentChunk" (
     "chunkIndex" INTEGER NOT NULL,
     "content" TEXT NOT NULL,
     "tokens" INTEGER NOT NULL,
+    "embedding" vector(768),
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
