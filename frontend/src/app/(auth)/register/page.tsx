@@ -34,7 +34,7 @@ export default function RegisterPage() {
   return (
     <main className="flex min-h-screen items-center justify-center bg-muted/40">
       <Card className="w-full max-w-md">
-        <CardHeader>
+        <CardHeader className="text-center">
           <CardTitle className="text-3xl">Create Account</CardTitle>
 
           <CardDescription>Register to start using DocMind AI</CardDescription>
