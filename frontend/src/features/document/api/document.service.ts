@@ -13,9 +13,7 @@ const DocumentService = {
 
   uploadDocument(file: File) {
     const formData = new FormData();
-
     formData.append('file', file);
-
     return api.post<ApiResponse<Document>>('/documents/upload', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
