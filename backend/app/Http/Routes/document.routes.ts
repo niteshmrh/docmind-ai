@@ -5,7 +5,12 @@ import DocumentController from "../Controllers/DocumentController.js";
 
 const router = Router();
 
-router.post("/upload", authMiddleware, multer.single("document"), DocumentController.upload);
+router.post(
+  "/upload",
+  authMiddleware,
+  multer.single("file"),
+  DocumentController.upload,
+);
 router.get("/", authMiddleware, DocumentController.list);
 router.get("/:id", authMiddleware, DocumentController.get);
 router.get("/:id/download", authMiddleware, DocumentController.download);
