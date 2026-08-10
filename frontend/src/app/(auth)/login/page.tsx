@@ -2,7 +2,7 @@
 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-
+import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -48,6 +48,12 @@ export default function LoginPage() {
               {login.isPending ? 'Signing In...' : 'Login'}
             </Button>
           </form>
+          <p className="mt-6 text-center text-sm">
+            Don't have an account?{' '}
+            <Link href="/register" className="font-medium text-primary hover:underline">
+              Register
+            </Link>
+          </p>
         </CardContent>
       </Card>
     </main>
