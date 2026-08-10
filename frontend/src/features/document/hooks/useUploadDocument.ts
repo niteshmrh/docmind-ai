@@ -2,7 +2,6 @@
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
-
 import DocumentService from '../api/document.service';
 
 export function useUploadDocument() {
