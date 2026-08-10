@@ -6,9 +6,11 @@ import { toast } from 'sonner';
 
 import AuthService from '../api/auth.service';
 import { storage } from '@/utils/storage';
+import { useAuth } from '@/context/AuthContext';
 
 export function useLogin() {
   const router = useRouter();
+  const { login } = useAuth();
 
   return useMutation({
     mutationFn: AuthService.login,
@@ -17,6 +19,9 @@ export function useLogin() {
       const result = response.data.result;
       storage.setAccessToken(result.accessToken);
       storage.setRefreshToken(result.refreshToken);
+
+      login(result.user);
+
       toast.success(response.data.message);
       router.push('/dashboard');
     },

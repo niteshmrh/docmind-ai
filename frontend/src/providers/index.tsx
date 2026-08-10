@@ -6,16 +6,16 @@ import QueryProvider from './query-provider';
 import { ThemeProvider } from './theme-provider';
 import SonnerProvider from './sonner-provider';
 
-type Props = {
-  children: ReactNode;
-};
+import { AuthProvider } from '@/context/AuthContext';
 
-export default function Providers({ children }: Props) {
+export default function Providers({ children }: { children: ReactNode }) {
   return (
     <ThemeProvider>
       <QueryProvider>
-        {children}
-        <SonnerProvider />
+        <AuthProvider>
+          {children}
+          <SonnerProvider />
+        </AuthProvider>
       </QueryProvider>
     </ThemeProvider>
   );
