@@ -1,0 +1,59 @@
+🔹 Core Node.js Concepts
+✔ How JavaScript works on the server
+✔ LibUV & the Event Loop (Node.js under the hood)
+✔ V8 Engine – How Node.js executes JavaScript
+✔ Thread Pool in LibUV – Handling async operations
+✔ Async Programming – Promises, Callbacks, and Async/Await
+✔ Modules in Node.js – module.exports & require
+✔ Error Handling – Writing fail-proof code
+✔ Building Modular Code – Keeping your code clean & scalable
+
+🔹 Essential Development Skills
+✔ Error Handling – Avoiding crashes & debugging efficiently
+✔ Writing Modular Code – Structuring code for scalability
+✔ Authentication & Security – JWT, Cookies, OAuth, best practices
+✔ Taking an App to Production – Deployment, logging, monitoring
+✔ Data Sanitization & Schema Validation – Keeping user input safe
+✔ Middlewares in Node.js – How they work & best practices
+✔ Routing & Request Handlers – Optimizing API routes
+✔ ref, populate & API Structuring – Designing APIs the right way
+✔ Scheduling Cron Jobs – Automating tasks in Node
+✔ Networking Internals – How Node.js handles HTTP requests
+✔ Performance Optimization – Profiling and making apps faster
+✔ Microservices Communication – Talking to other services seamlessly
+
+🔹 Real-World Development Skills
+✔ Authentication & Security – JWT, Cookies, and best practices
+✔ Going to Production – Deployment strategies, logging, and monitoring
+✔ Schema Validation & Data Sanitization – Avoiding bad data
+✔ Middlewares in Express – How they work & best practices
+✔ Efficient Routing & Request Handling
+✔ API Design – populate, ref, and structuring APIs
+✔ Cron Jobs & Scheduling Tasks
+✔ Understanding Networking – How Node.js handles requests under the hood
+✔ Optimizing Performance – Making your app faster
+✔ Interacting with Microservices – Communicating with other services
+
+🔹 Quickfire Topics for Interviews
+✔ Event Loop | Callbacks | Promises | Async/Await | Streams | Modules | NPM
+✔ Express.js | Middleware | Routing | Error Handling | Buffers | File System
+✔ Cluster Module | Worker Threads | REST APIs | JWT & Authentication | Databases (SQL & NoSQL)
+✔ ORM/ODM (Sequelize, Mongoose) | Caching with Redis | Security Best Practices
+✔ Debugging & Testing | Performance Tuning | Microservices Architecture | Child Processes
+✔ WebSockets & Real-Time Communication | Middleware Best Practices | package.json & Dependency Management
+
+Node JS:
+⭐ What is a REST API?
+⭐ What are Query parameter and Path variables, explain the differences between?
+⭐ What are HTTP methods?
+⭐ What is a patch?
+⭐ What is process.nextTick() and setImmediate(), explain the differences?
+⭐ What is a middleware?
+⭐ How to configure custom middleware in Node JS?
+⭐ Is Node JS a framework?
+⭐ How can we achieve concurrent requests in Node JS?
+⭐ What is Promise.race and Promise.All ?
+⭐ What is the difference between Promises and Asyn await?
+⭐ How to handle error in Node JS API?
+⭐ What are streams and explain different type of streams in Node JS?
+
