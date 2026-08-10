@@ -4,15 +4,16 @@ export type DocumentType = 'PDF' | 'DOCX' | 'TXT' | 'CSV' | 'XLSX' | 'IMAGE';
 
 export interface Document {
   id: string;
+  userId: string;
   originalName: string;
   fileName: string;
   mimeType: string;
-  extension: string;
+  extension: DocumentType;
   size: number;
+  path: string;
   status: DocumentStatus;
-  type: DocumentType;
+  type: string;
   createdAt: string;
-  updatedAt: string;
 }
 
 export interface UploadResponse {

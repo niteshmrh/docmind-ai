@@ -1,15 +1,25 @@
 'use client';
 
-import { useAuth } from '@/context/AuthContext';
+import { Bell } from 'lucide-react';
+
+import { Input } from '@/components/ui/input';
+
+import UserMenu from './UserMenu';
 
 export default function AppNavbar() {
-  const { user } = useAuth();
-
   return (
-    <div className="flex items-center justify-between w-full">
-      <h2 className="font-semibold text-lg">DocMind AI</h2>
+    <header className="flex h-16 items-center justify-between border-b bg-background px-6">
+      <div className="w-full max-w-md">
+        <Input placeholder="Search documents..." />
+      </div>
 
-      <div>{user?.name}</div>
-    </div>
+      <div className="flex items-center gap-4">
+        <button className="rounded-lg p-2 transition hover:bg-muted">
+          <Bell className="h-5 w-5" />
+        </button>
+
+        <UserMenu />
+      </div>
+    </header>
   );
 }

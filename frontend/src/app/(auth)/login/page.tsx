@@ -6,12 +6,15 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
+import { Eye, EyeOff } from 'lucide-react';
+import { useState } from 'react';
 
 import { loginSchema, LoginForm } from '@/features/auth/schemas/login.schema';
 import { useLogin } from '@/features/auth/hooks/useLogin';
 
 export default function LoginPage() {
   const login = useLogin();
+  const [showPassword, setShowPassword] = useState(false);
 
   const {
     register,
@@ -38,7 +41,24 @@ export default function LoginPage() {
             </div>
 
             <div>
-              <Input type="password" placeholder="Password" {...register('password')} />
+              <div className="relative">
+                <Input
+                  type={showPassword ? 'text' : 'password'}
+                  placeholder="Password"
+                  {...register('password')}
+                  className="pr-10"
+                />
+
+                <button
+                  type="button"
+                  aria-label={showPassword ? 'Hide password' : 'Show password'}
+                  onClick={() => setShowPassword((prev) => !prev)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                >
+                  {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                </button>
+              </div>
+
               {errors.password && (
                 <p className="mt-1 text-sm text-red-500">{errors.password.message}</p>
               )}

@@ -1,39 +1,35 @@
 'use client';
 
-import Link from 'next/link';
+import { useMemo, useState } from 'react';
 
-import { Button } from '@/components/ui/button';
-
+import DocumentSearch from '@/features/document/components/DocumentSearch';
+import DocumentList from '@/features/document/components/DocumentList';
 import { useDocuments } from '@/features/document/hooks/useDocuments';
 import { useDeleteDocument } from '@/features/document/hooks/useDeleteDocument';
-import DocumentCard from '@/features/document/components/DocumentCard';
 
 export default function DocumentsPage() {
-  const { data, isLoading } = useDocuments();
-
+  const { data = [], isLoading } = useDocuments();
   const deleteDocument = useDeleteDocument();
 
+  const [search, setSearch] = useState('');
+
+  const documents = useMemo(() => {
+    return data.filter((document) =>
+      document.originalName.toLowerCase().includes(search.toLowerCase())
+    );
+  }, [data, search]);
+
   if (isLoading) {
-    return <p>Loading...</p>;
+    return <p className="p-8">Loading...</p>;
   }
 
   return (
     <main className="space-y-6 p-8">
-      <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold">Documents</h1>
-
-        <Button asChild>
-          <Link href="/documents/upload">Upload</Link>
-        </Button>
+      <div className="space-y-4">
+        <h1 className="text-3xl font-bold">My Documents</h1>
+        <DocumentSearch value={search} onChange={setSearch} />
       </div>
-
-      {data?.map((document) => (
-        <DocumentCard
-          key={document.id}
-          document={document}
-          onDelete={(id) => deleteDocument.mutate(id)}
-        />
-      ))}
+      <DocumentList documents={documents} onDelete={(id) => deleteDocument.mutate(id)} />
     </main>
   );
 }
