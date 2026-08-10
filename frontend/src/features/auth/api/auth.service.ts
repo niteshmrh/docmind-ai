@@ -1,7 +1,7 @@
 import api from '@/lib/axios';
 import { ApiResponse } from '@/types/api';
 
-import { LoginRequest, RegisterRequest, LoginResult } from './auth.types';
+import { LoginRequest, RegisterRequest, LoginResult } from '../types/auth.types';
 
 const AuthService = {
   login(data: LoginRequest) {
