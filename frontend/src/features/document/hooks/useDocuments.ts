@@ -6,9 +6,8 @@ import DocumentService from '../api/document.service';
 export function useDocuments() {
   return useQuery({
     queryKey: ['documents'],
-
     queryFn: async () => {
-      const response = await DocumentService.getAll();
+      const response = await DocumentService.getDocuments();
 
       return response.data.result;
     },

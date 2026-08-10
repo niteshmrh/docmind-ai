@@ -3,12 +3,16 @@
 import { useQuery } from '@tanstack/react-query';
 import DocumentService from '../api/document.service';
 
-export function useDocuments() {
+export function useDocument(id: string) {
   return useQuery({
-    queryKey: ['documents'],
+    queryKey: ['document', id],
+
     queryFn: async () => {
-      const response = await DocumentService.getAll();
+      const response = await DocumentService.getDocument(id);
+
       return response.data.result;
     },
+
+    enabled: !!id,
   });
 }

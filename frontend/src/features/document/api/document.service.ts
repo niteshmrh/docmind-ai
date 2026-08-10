@@ -3,15 +3,15 @@ import { ApiResponse } from '@/types/api';
 import { Document } from '../types/document.types';
 
 const DocumentService = {
-  getAll() {
+  getDocuments() {
     return api.get<ApiResponse<Document[]>>('/documents');
   },
 
-  getById(id: string) {
+  getDocument(id: string) {
     return api.get<ApiResponse<Document>>(`/documents/${id}`);
   },
 
-  upload(file: File) {
+  uploadDocument(file: File) {
     const formData = new FormData();
 
     formData.append('file', file);
@@ -23,8 +23,8 @@ const DocumentService = {
     });
   },
 
-  delete(id: string) {
-    return api.delete(`/documents/${id}`);
+  deleteDocument(id: string) {
+    return api.delete<ApiResponse<null>>(`/documents/${id}`);
   },
 };
 
