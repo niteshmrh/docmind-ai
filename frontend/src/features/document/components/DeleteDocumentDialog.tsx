@@ -15,15 +15,19 @@ import {
 import { Button } from '@/components/ui/button';
 import { Trash2 } from 'lucide-react';
 
-interface Props {
+interface DeleteDocumentDialogProps {
   onConfirm: () => void;
+  isDeleting?: boolean;
 }
 
-export default function DeleteDocumentDialog({ onConfirm }: Props) {
+export default function DeleteDocumentDialog({
+  onConfirm,
+  isDeleting = false,
+}: DeleteDocumentDialogProps) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="destructive" size="icon">
+        <Button variant="destructive" size="icon" disabled={isDeleting}>
           <Trash2 className="h-4 w-4" />
         </Button>
       </AlertDialogTrigger>
@@ -34,7 +38,9 @@ export default function DeleteDocumentDialog({ onConfirm }: Props) {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={onConfirm}>Delete</AlertDialogAction>
+          <AlertDialogAction onClick={onConfirm} disabled={isDeleting}>
+            {isDeleting ? 'Deleting...' : 'Delete'}
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

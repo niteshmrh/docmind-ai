@@ -10,6 +10,7 @@ const api = axios.create({
   },
 });
 
+// Attach access token to every request
 api.interceptors.request.use((config) => {
   const token = storage.getAccessToken();
   if (token) {
@@ -17,5 +18,21 @@ api.interceptors.request.use((config) => {
   }
   return config;
 });
+
+// Handle expired/invalid token
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      storage.removeAccessToken();
+      storage.removeRefreshToken();
+      localStorage.removeItem('user');
+      if (typeof window !== 'undefined' && window.location.pathname !== '/login') {
+        window.location.href = '/login';
+      }
+    }
+    return Promise.reject(error);
+  }
+);
 
 export default api;

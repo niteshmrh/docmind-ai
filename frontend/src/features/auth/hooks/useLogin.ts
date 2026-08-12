@@ -8,7 +8,7 @@ import AuthService from '../api/auth.service';
 import { storage } from '@/utils/storage';
 import { useAuth } from '@/context/AuthContext';
 
-export function useLogin() {
+export function useLogin(redirect?: string | null) {
   const router = useRouter();
   const { login } = useAuth();
 
@@ -17,13 +17,14 @@ export function useLogin() {
 
     onSuccess(response) {
       const result = response.data.result;
+
       storage.setAccessToken(result.accessToken);
       storage.setRefreshToken(result.refreshToken);
-
       login(result.user);
-
       toast.success(response.data.message);
-      router.push('/dashboard');
+      const safeRedirect =
+        redirect?.startsWith('/') && !redirect.startsWith('//') ? redirect : '/dashboard';
+      router.push(safeRedirect);
     },
 
     onError(error: any) {

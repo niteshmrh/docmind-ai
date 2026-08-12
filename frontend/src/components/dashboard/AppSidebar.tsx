@@ -19,14 +19,15 @@ export default function AppSidebar() {
       <nav className="flex-1 space-y-2 p-4">
         {navigation.map((item) => {
           const Icon = item.icon;
-          const active = pathname === item.href || pathname.startsWith(item.href + '/');
+          // const active = pathname === item.href || pathname.startsWith(item.href + '/');
+          const isActive = pathname === item.href;
           return (
             <Link
               key={item.href}
               href={item.href}
               className={cn(
                 'flex items-center gap-3 rounded-lg px-4 py-3 transition-colors',
-                active ? 'bg-primary text-primary-foreground' : 'hover:bg-muted'
+                isActive ? 'bg-primary text-primary-foreground' : 'hover:bg-muted'
               )}
             >
               <Icon className="h-5 w-5" />

@@ -1,18 +1,34 @@
 import api from '@/lib/axios';
-import { ApiResponse } from '@/types/api';
-import { ChatRequest, ChatResponse, ChatMessage, ChatSession } from '../types/chat.types';
+
+import {
+  ApiResponse,
+  ChatAnswer,
+  ChatHistory,
+  ChatSession,
+  ChatSessionListItem,
+  CreateSessionRequest,
+  SendMessageRequest,
+} from '../types/chat.types';
 
 const ChatService = {
-  sendMessage(data: ChatRequest) {
-    return api.post<ApiResponse<ChatResponse>>('/chat', data);
+  createSession(data: CreateSessionRequest) {
+    return api.post<ApiResponse<ChatSession>>('/chat/session', data);
   },
 
-  getSessions(documentId: string) {
-    return api.get<ApiResponse<ChatSession[]>>(`/chat/sessions/${documentId}`);
+  listSessions() {
+    return api.get<ApiResponse<ChatSessionListItem[]>>('/chat/session');
   },
 
-  getMessages(sessionId: string) {
-    return api.get<ApiResponse<ChatMessage[]>>(`/chat/messages/${sessionId}`);
+  getHistory(sessionId: string) {
+    return api.get<ApiResponse<ChatHistory>>(`/chat/session/${sessionId}`);
+  },
+
+  deleteSession(sessionId: string) {
+    return api.delete<ApiResponse<null>>(`/chat/session/${sessionId}`);
+  },
+
+  sendMessage(data: SendMessageRequest) {
+    return api.post<ApiResponse<ChatAnswer>>('/chat/message', data);
   },
 };
 

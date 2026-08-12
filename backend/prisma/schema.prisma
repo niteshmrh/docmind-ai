@@ -96,19 +96,17 @@ model DocumentChunk {
 
 model ChatSession {
   id         String   @id @default(cuid())
-
   userId     String
   documentId String
-
   title      String?
-
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 
-  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  document Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  document   Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  messages   ChatMessage[]
 
-  messages ChatMessage[]
+  @@unique([userId, documentId])
 }
 
 enum ChatRole {

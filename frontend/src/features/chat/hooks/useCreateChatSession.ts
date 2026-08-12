@@ -2,17 +2,17 @@
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import DocumentService from '@/features/document/api/document.service';
+import ChatService from '../api/chat.service';
 
-export function useUploadDocument() {
+export function useCreateChatSession() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (file: File) => DocumentService.uploadDocument(file),
+    mutationFn: ChatService.createSession,
 
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['documents'],
+        queryKey: ['chat-sessions'],
       });
     },
   });

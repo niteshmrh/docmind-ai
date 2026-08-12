@@ -1,36 +1,73 @@
+'use client';
+
 import Link from 'next/link';
-import { FileText } from 'lucide-react';
+import { FileText, MessageSquare } from 'lucide-react';
 
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 
 import StatusBadge from './StatusBadge';
-import { Document } from '../types/document.types';
 import DeleteDocumentDialog from './DeleteDocumentDialog';
+
+import { Document } from '../types/document.types';
+import { ChatSessionListItem } from '@/features/chat/types/chat.types';
 
 interface Props {
   document: Document;
+  chatSession?: ChatSessionListItem;
+  sessionsLoading?: boolean;
   onDelete?: (id: string) => void;
+  isDeleting?: boolean;
 }
 
-export default function DocumentCard({ document, onDelete }: Props) {
+export default function DocumentCard({
+  document,
+  chatSession,
+  sessionsLoading = false,
+  onDelete,
+  isDeleting = false,
+}: Props) {
+  const chatHref = chatSession
+    ? `/chat?sessionId=${chatSession.id}`
+    : `/chat?documentId=${document.id}`;
+
+  const chatLabel = sessionsLoading ? 'Chat' : chatSession ? 'Continue Chat' : 'Open Chat';
+
   return (
     <Card>
-      <CardContent className="flex items-center justify-between p-5">
-        <div className="flex items-center gap-4">
-          <FileText className="h-10 w-10 text-primary" />
-          <div>
-            <h3 className="font-semibold">{document.originalName}</h3>
-            <p className="text-sm text-muted-foreground">{(document.size / 1024).toFixed(2)} KB</p>
-          </div>
-        </div>
+      <CardContent className="p-4">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          {/* Document information */}
+          <div className="flex min-w-0 items-center gap-3">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-muted">
+              <FileText className="h-5 w-5 text-muted-foreground" />
+            </div>
 
-        <div className="flex items-center gap-4">
-          <StatusBadge status={document.status} />
-          <Button asChild disabled={document.status !== 'READY'}>
-            <Link href={`/chat?documentId=${document.id}`}>Open Chat</Link>
-          </Button>
-          <DeleteDocumentDialog onConfirm={() => onDelete?.(document.id)} />
+            <div className="min-w-0">
+              <p className="truncate font-medium">{document.originalName}</p>
+
+              <p className="text-xs text-muted-foreground">
+                {new Date(document.createdAt).toLocaleDateString()}
+              </p>
+            </div>
+          </div>
+
+          {/* Actions */}
+          <div className="flex flex-wrap items-center justify-end gap-2">
+            <StatusBadge status={document.status} />
+
+            <Button asChild size="sm" disabled={document.status !== 'READY'}>
+              <Link href={chatHref}>
+                <MessageSquare className="mr-2 h-4 w-4" />
+                {chatLabel}
+              </Link>
+            </Button>
+
+            <DeleteDocumentDialog
+              onConfirm={() => onDelete?.(document.id)}
+              isDeleting={isDeleting}
+            />
+          </div>
         </div>
       </CardContent>
     </Card>
