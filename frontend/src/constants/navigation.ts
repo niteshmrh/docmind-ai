@@ -1,4 +1,11 @@
-import { LayoutDashboard, FileText, Upload, MessageSquare, Settings } from 'lucide-react';
+import {
+  LayoutDashboard,
+  FileText,
+  Upload,
+  MessageSquare,
+  Settings,
+  UserCircle,
+} from 'lucide-react';
 
 export const navigation = [
   {
@@ -25,5 +32,10 @@ export const navigation = [
     title: 'Settings',
     href: '/settings',
     icon: Settings,
+  },
+  {
+    title: 'Profile',
+    href: '/profile',
+    icon: UserCircle,
   },
 ];

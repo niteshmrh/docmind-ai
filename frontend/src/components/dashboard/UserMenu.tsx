@@ -11,11 +11,8 @@ import {
 } from '@/components/ui/dropdown-menu';
 
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-
 import { Button } from '@/components/ui/button';
-
 import { LogOut, Settings, User } from 'lucide-react';
-
 import { useAuth } from '@/context/AuthContext';
 
 export default function UserMenu() {
@@ -54,7 +51,7 @@ export default function UserMenu() {
       </DropdownMenuTrigger>
 
       <DropdownMenuContent align="end" className="w-56">
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={() => router.push('/profile')}>
           <User className="mr-2 h-4 w-4" />
           Profile
         </DropdownMenuItem>
