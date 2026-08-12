@@ -144,3 +144,11 @@ docmind-ai/
 │
 ├── .gitignore
 └── README.md
+
+```
+
+## Copyright
+
+Copyright © 2026 Nitesh Kumar.
+
+This project is licensed under the MIT License. See the `LICENSE` file for details.
