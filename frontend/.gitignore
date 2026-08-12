@@ -47,3 +47,13 @@ yarn-error.log*
 
 # vscode
 .vscode/
+
+
+
+.env
+.env.local
+.env.*.local
+node_modules/
+.next/
+dist/
+uploads/
