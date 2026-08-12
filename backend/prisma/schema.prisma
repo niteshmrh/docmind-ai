@@ -17,14 +17,113 @@ enum UserRole {
 }
 
 model User {
-  id          String    @id @default(cuid())
-  name        String
-  email       String    @unique
-  password    String
+  id       String @id @default(cuid())
+  name     String
+  email    String @unique
+  password String
 
-  role        UserRole  @default(USER)
-  isVerified  Boolean   @default(false)
+  refreshToken String?
 
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  role       UserRole @default(USER)
+  isVerified Boolean  @default(false)
+
+  documents Document[]
+  chatSessions ChatSession[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum DocumentStatus {
+  UPLOADING
+  PROCESSING
+  READY
+  FAILED
+}
+
+enum DocumentType {
+  PDF
+  DOCX
+  TXT
+  CSV
+  XLSX
+  IMAGE
+}
+
+model Document {
+  id     String @id @default(cuid())
+  userId String
+
+  originalName String
+  fileName     String
+  mimeType     String
+  extension    String
+  size         Int
+
+  path   String
+  status DocumentStatus @default(UPLOADING)
+  type   DocumentType
+
+  content      String?
+  processedAt  DateTime?
+  errorMessage String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user   User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  chunks DocumentChunk[]
+  chatSessions ChatSession[]
+}
+
+model DocumentChunk {
+  id         String @id @default(cuid())
+  documentId String
+
+  chunkIndex Int
+  content    String
+  tokens     Int
+
+  embedding  Unsupported("vector(768)")?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  document Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
+
+  @@index([documentId])
+}
+
+model ChatSession {
+  id         String   @id @default(cuid())
+  userId     String
+  documentId String
+  title      String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  document   Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  messages   ChatMessage[]
+
+  @@unique([userId, documentId])
+}
+
+enum ChatRole {
+  USER
+  ASSISTANT
+}
+
+model ChatMessage {
+
+  id String @id @default(cuid())
+  sessionId String
+  role ChatRole
+
+  content String
+
+  createdAt DateTime @default(now())
+
+  session ChatSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
 }
