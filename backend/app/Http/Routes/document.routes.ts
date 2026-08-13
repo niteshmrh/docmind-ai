@@ -1,6 +1,7 @@
 import { Router } from "express";
 import multer from "../../../config/multer.js";
 import authMiddleware from "../Middlewares/auth.middleware.js";
+import { uploadRateLimiter } from "../Middlewares/rateLimit.middleware.js";
 import DocumentController from "../Controllers/DocumentController.js";
 
 const router = Router();
@@ -8,6 +9,7 @@ const router = Router();
 router.post(
   "/upload",
   authMiddleware,
+  uploadRateLimiter,
   multer.single("file"),
   DocumentController.upload,
 );

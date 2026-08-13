@@ -9,6 +9,7 @@ import env from "./config/env.js";
 import routes from "./app/Http/Routes/routes.js";
 // Middlewares
 import errorMiddleware from "./app/Http/Middlewares/error.middleware.js";
+import { generalRateLimiter } from "./app/Http/Middlewares/rateLimit.middleware.js";
 // Utils
 import HTTP_STATUS from "./app/Utils/httpStatus.js";
 import customResponse from "./app/Utils/customResponse.js";
@@ -19,8 +20,16 @@ app.use(cors());
 app.use(helmet());
 app.use(morgan("combined"));
 app.use(express.json());
-app.use(express.urlencoded({ limit: '200mb', extended: true, parameterLimit: 1000000 }));
+app.use(generalRateLimiter);
+app.use(
+  express.urlencoded({
+    limit: "200mb",
+    extended: true,
+    parameterLimit: 1000000,
+  }),
+);
 
+// Health Check
 app.get("/healthz", (req, res) => {
   return customResponse.success(req, res, {
     statusCode: HTTP_STATUS.OK,
@@ -33,7 +42,7 @@ app.get("/healthz", (req, res) => {
   });
 });
 
-
+// Application URL
 app.use("/docmind-ai", routes);
 
 // Always last
@@ -42,7 +51,6 @@ app.use(errorMiddleware);
 const server = app.listen(env.PORT, () => {
   console.log(`${env.NODE_ENV} Server is running on port ${env.PORT}`);
 });
-
 
 process.on("unhandledRejection", (error: Error) => {
   console.log("Unhandled Rejection:", error);
