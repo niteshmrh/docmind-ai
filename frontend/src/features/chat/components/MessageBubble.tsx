@@ -34,15 +34,17 @@ export default function MessageBubble({ message }: MessageBubbleProps) {
     <div className={cn('flex w-full gap-3', isUser ? 'justify-end' : 'justify-start')}>
       {/* AI avatar */}
       {!isUser && (
-        <div className="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border bg-background">
+        <div className="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
           <Bot className="h-4 w-4" />
         </div>
       )}
 
       <div
         className={cn(
-          'group max-w-[85%] rounded-2xl px-4 py-3 sm:max-w-[80%]',
-          isUser ? 'bg-primary text-primary-foreground' : 'bg-muted'
+          'group max-w-[85%] rounded-2xl px-4 py-3 sm:max-w-[75%]',
+          isUser
+            ? 'rounded-br-md bg-primary text-primary-foreground'
+            : 'rounded-bl-md border border-border bg-card shadow-sm'
         )}
       >
         {isUser ? (
@@ -163,7 +165,7 @@ export default function MessageBubble({ message }: MessageBubbleProps) {
 
       {/* User avatar */}
       {isUser && (
-        <div className="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border bg-background">
+        <div className="mt-1 flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-muted">
           <User className="h-4 w-4" />
         </div>
       )}

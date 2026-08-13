@@ -55,86 +55,202 @@ export default function UploadPage() {
   }
 
   return (
-    <main className="mx-auto w-full max-w-4xl space-y-8 p-8">
-      {/* Header */}
-      <div>
-        <h1 className="text-3xl font-bold">Upload Document</h1>
+    <main className="docmind-page docmind-gradient min-h-full px-4 py-6">
+      <div className="mx-auto max-w-5xl">
+        {/* =================================================
+            HEADER
+        ================================================= */}
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="mb-2 text-xs font-medium uppercase tracking-[0.12em] text-primary">
+              Document Management
+            </p>
 
-        <p className="mt-2 text-muted-foreground">
-          Upload a document to start asking questions with DocMind AI.
-        </p>
-      </div>
+            <h1 className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl">
+              Upload Document
+            </h1>
 
-      {/* Dropzone */}
-      {!file && <UploadDropzone onFileSelect={setFile} />}
-
-      {/* Selected file */}
-      {file && (
-        <div className="rounded-xl border bg-card p-5">
-          <div className="flex items-center justify-between gap-4">
-            <div className="flex min-w-0 items-center gap-4">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-primary/10">
-                <FileText className="h-6 w-6 text-primary" />
-              </div>
-
-              <div className="min-w-0">
-                <p className="truncate font-medium">{file.name}</p>
-
-                <p className="mt-1 text-sm text-muted-foreground">{formatFileSize(file.size)}</p>
-              </div>
-            </div>
-
-            <Button
-              type="button"
-              variant="ghost"
-              size="icon"
-              disabled={uploadMutation.isPending}
-              onClick={handleRemoveFile}
-              title="Remove file"
-            >
-              <Trash2 className="h-4 w-4 text-destructive" />
-            </Button>
+            <p className="mt-2 max-w-xl text-sm leading-6 text-muted-foreground">
+              Upload a document to start asking questions and chatting with your knowledge base.
+            </p>
           </div>
+        </div>
 
-          {/* Upload status */}
-          {uploadMutation.isSuccess && (
-            <div className="mt-4 flex items-center gap-2 rounded-lg bg-green-500/10 p-3 text-sm text-green-600">
-              <CheckCircle2 className="h-4 w-4" />
-              Document uploaded successfully.
+        {/* =================================================
+            UPLOAD AREA
+        ================================================= */}
+        <div className="mt-8">
+          {!file && <UploadDropzone onFileSelect={setFile} />}
+
+          {/* =================================================
+              SELECTED FILE
+          ================================================= */}
+          {file && (
+            <div
+              className="
+                rounded-2xl
+                border
+                border-border
+                bg-card
+                p-5
+                shadow-none
+              "
+            >
+              {/* File */}
+              <div className="flex items-center justify-between gap-4">
+                <div className="flex min-w-0 items-center gap-4">
+                  <div
+                    className="
+                      flex
+                      h-12
+                      w-12
+                      shrink-0
+                      items-center
+                      justify-center
+                      rounded-xl
+                      bg-primary/10
+                      text-primary
+                    "
+                  >
+                    <FileText className="h-6 w-6" />
+                  </div>
+
+                  <div className="min-w-0">
+                    <p className="truncate text-sm font-semibold">{file.name}</p>
+
+                    <div className="mt-1 flex items-center gap-2 text-xs text-muted-foreground">
+                      <span>{formatFileSize(file.size)}</span>
+
+                      <span>•</span>
+
+                      <span>Ready to upload</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Remove */}
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  disabled={uploadMutation.isPending}
+                  onClick={handleRemoveFile}
+                  title="Remove file"
+                  className="
+                    h-9
+                    w-9
+                    shrink-0
+                    rounded-lg
+                    text-muted-foreground
+                    hover:bg-red-500/10
+                    hover:text-red-500
+                  "
+                >
+                  <Trash2 className="h-4 w-4" />
+                </Button>
+              </div>
+
+              {/* Divider */}
+              <div className="my-5 border-t border-border" />
+
+              {/* Success */}
+              {uploadMutation.isSuccess && (
+                <div
+                  className="
+                    flex
+                    items-center
+                    gap-2
+                    rounded-xl
+                    border
+                    border-emerald-500/20
+                    bg-emerald-500/5
+                    px-4
+                    py-3
+                    text-sm
+                    text-emerald-600
+                    dark:text-emerald-400
+                  "
+                >
+                  <CheckCircle2 className="h-4 w-4 shrink-0" />
+
+                  <span>Document uploaded successfully.</span>
+                </div>
+              )}
+
+              {/* Upload */}
+              {!uploadMutation.isSuccess && (
+                <Button
+                  className="
+                    h-10
+                    w-full
+                    rounded-lg
+                    sm:w-auto
+                    sm:min-w-[180px]
+                  "
+                  onClick={handleUpload}
+                  disabled={uploadMutation.isPending}
+                >
+                  {uploadMutation.isPending ? (
+                    <>
+                      <UploadCloud className="mr-2 h-4 w-4" />
+                      Uploading...
+                    </>
+                  ) : (
+                    <>
+                      <UploadCloud className="mr-2 h-4 w-4" />
+                      Upload Document
+                    </>
+                  )}
+                </Button>
+              )}
             </div>
           )}
-
-          {/* Upload button */}
-          <Button
-            className="mt-5 w-full"
-            onClick={handleUpload}
-            disabled={uploadMutation.isPending}
-          >
-            {uploadMutation.isPending ? (
-              <>
-                <UploadCloud className="mr-2 h-4 w-4 animate-pulse" />
-                Uploading...
-              </>
-            ) : (
-              <>
-                <UploadCloud className="mr-2 h-4 w-4" />
-                Upload Document
-              </>
-            )}
-          </Button>
         </div>
-      )}
 
-      {/* Upload another file */}
-      {file && !uploadMutation.isPending && (
-        <button
-          type="button"
-          onClick={() => setFile(null)}
-          className="mx-auto block text-sm text-muted-foreground hover:text-foreground hover:underline"
-        >
-          Choose a different file
-        </button>
-      )}
+        {/* =================================================
+            CHANGE FILE
+        ================================================= */}
+        {file && !uploadMutation.isPending && (
+          <button
+            type="button"
+            onClick={() => setFile(null)}
+            className="
+              mx-auto
+              mt-4
+              block
+              text-sm
+              text-muted-foreground
+              transition-colors
+              hover:text-primary
+              hover:underline
+            "
+          >
+            Choose a different file
+          </button>
+        )}
+
+        {/* =================================================
+            HELP
+        ================================================= */}
+        {!file && (
+          <div
+            className="
+              mt-5
+              rounded-xl
+              border
+              border-border/60
+              bg-muted/20
+              px-4
+              py-3
+              text-center
+              text-xs
+              text-muted-foreground
+            "
+          >
+            Maximum file size and supported formats are enforced automatically.
+          </div>
+        )}
+      </div>
     </main>
   );
 }

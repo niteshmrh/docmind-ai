@@ -9,26 +9,26 @@ interface StatusBadgeProps {
 export default function StatusBadge({ status }: StatusBadgeProps) {
   const config = {
     UPLOADING: {
-      label: 'Uploading',
-      className: 'bg-blue-500/10 text-blue-600',
+      label: 'UPLOADING',
+      className: 'bg-blue-500/10 text-blue-600 dark:text-blue-400',
       icon: Loader2,
     },
 
     PROCESSING: {
-      label: 'Processing',
-      className: 'bg-yellow-500/10 text-yellow-600',
-      icon: Loader2,
+      label: 'PROCESSING',
+      className: 'bg-yellow-500/10 text-yellow-600 dark:text-yellow-400',
+      icon: Clock3,
     },
 
     READY: {
-      label: 'Ready',
-      className: 'bg-green-500/10 text-green-600',
+      label: 'READY',
+      className: 'bg-green-500/10 text-green-600 dark:text-green-400',
       icon: CheckCircle2,
     },
 
     FAILED: {
-      label: 'Failed',
-      className: 'bg-red-500/10 text-red-600',
+      label: 'FAILED',
+      className: 'bg-red-500/10 text-red-600 dark:text-red-400',
       icon: XCircle,
     },
   } as const;
@@ -36,7 +36,9 @@ export default function StatusBadge({ status }: StatusBadgeProps) {
   const current = config[status as keyof typeof config];
 
   if (!current) {
-    return <span className="rounded-full bg-muted px-3 py-1 text-xs font-medium">{status}</span>;
+    return (
+      <span className="rounded-full bg-muted px-3 py-1 text-[11px] font-medium">{status}</span>
+    );
   }
 
   const Icon = current.icon;
@@ -44,17 +46,10 @@ export default function StatusBadge({ status }: StatusBadgeProps) {
   return (
     <span
       className={cn(
-        'inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium',
+        'inline-flex items-center rounded-full px-3 py-1 text-[10px] font-semibold tracking-wide',
         current.className
       )}
     >
-      <Icon
-        className={cn(
-          'h-3.5 w-3.5',
-          status === 'UPLOADING' || status === 'PROCESSING' ? 'animate-spin' : ''
-        )}
-      />
-
       {current.label}
     </span>
   );
