@@ -15,6 +15,7 @@ import { registerSchema, RegisterForm } from '@/features/auth/schemas/register.s
 import { useRegister } from '@/features/auth/hooks/useRegister';
 
 import { AppBackground } from '@/components/common/AppTheme';
+import ThemeToggle from '@/components/common/ThemeToggle';
 
 export default function RegisterContent() {
   const registerMutation = useRegister();
@@ -41,6 +42,10 @@ export default function RegisterContent() {
   return (
     <AppBackground>
       <div className="flex min-h-screen items-center justify-center px-5 py-12">
+        {/* Theme Toggle */}
+        <div className="absolute right-5 top-3 z-50 sm:right-6 sm:top-6">
+          <ThemeToggle />
+        </div>
         <div className="grid w-full max-w-5xl items-center gap-12 lg:grid-cols-2">
           {/* LEFT SIDE */}
           <div className="hidden lg:block">
