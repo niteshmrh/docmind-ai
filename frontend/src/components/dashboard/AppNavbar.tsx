@@ -4,6 +4,7 @@ import { Bell } from 'lucide-react';
 
 import { Input } from '@/components/ui/input';
 import UserMenu from './UserMenu';
+import ThemeToggle from '@/components/common/ThemeToggle';
 
 export default function AppNavbar() {
   return (
@@ -14,16 +15,19 @@ export default function AppNavbar() {
       </div>
 
       {/* Right side */}
-      <div className="ml-6 flex shrink-0 items-center gap-4">
-        <button
-          type="button"
-          className="rounded-lg p-2 transition-colors hover:bg-muted"
-          aria-label="Notifications"
-        >
-          <Bell className="h-5 w-5" />
-        </button>
+      <div className="flex items-center gap-3">
+        <ThemeToggle />
+        <div className="ml-6 flex shrink-0 items-center gap-4">
+          <button
+            type="button"
+            className="rounded-lg p-2 transition-colors hover:bg-muted"
+            aria-label="Notifications"
+          >
+            <Bell className="h-5 w-5" />
+          </button>
 
-        <UserMenu />
+          <UserMenu />
+        </div>
       </div>
     </header>
   );
