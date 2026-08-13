@@ -1,6 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import { LogOut, Settings, User, ChevronDown } from 'lucide-react';
 
 import {
   DropdownMenu,
@@ -11,59 +12,99 @@ import {
 } from '@/components/ui/dropdown-menu';
 
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
-import { LogOut, Settings, User } from 'lucide-react';
+
 import { useAuth } from '@/context/AuthContext';
 
 export default function UserMenu() {
   const router = useRouter();
-
   const { user, logout } = useAuth();
 
   const initials =
     user?.name
       ?.split(' ')
+      .filter(Boolean)
       .map((name) => name[0])
       .join('')
+      .slice(0, 2)
       .toUpperCase() ?? 'U';
 
-  function handleLogout() {
+  const handleLogout = () => {
     logout();
     router.replace('/login');
-  }
+  };
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="h-auto px-2">
-          <div className="flex items-center gap-3">
-            <Avatar>
-              <AvatarFallback>{initials}</AvatarFallback>
-            </Avatar>
+        <button
+          type="button"
+          className="
+            flex items-center gap-2
+            rounded-xl px-2 py-1.5
+            outline-none
+            hover:bg-accent
+            focus-visible:ring-2
+            focus-visible:ring-primary/30
+          "
+        >
+          <Avatar className="h-9 w-9 border border-border">
+            <AvatarFallback
+              className="
+                bg-primary/10
+                text-primary
+                font-semibold
+              "
+            >
+              {initials}
+            </AvatarFallback>
+          </Avatar>
 
-            <div className="hidden text-left md:block">
-              <p className="text-sm font-medium">{user?.name}</p>
+          <div className="hidden min-w-0 text-left md:block">
+            <p className="max-w-32 truncate text-sm font-semibold">{user?.name ?? 'User'}</p>
 
-              <p className="text-xs text-muted-foreground">{user?.email}</p>
-            </div>
+            <p className="max-w-36 truncate text-[11px] text-muted-foreground">
+              {user?.email ?? ''}
+            </p>
           </div>
-        </Button>
+
+          <ChevronDown className="hidden h-4 w-4 text-muted-foreground md:block" />
+        </button>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent align="end" className="w-56">
-        <DropdownMenuItem onClick={() => router.push('/profile')}>
+      <DropdownMenuContent
+        align="end"
+        sideOffset={8}
+        className="w-60 rounded-xl border-border p-1.5"
+      >
+        <div className="px-3 py-2">
+          <p className="text-sm font-semibold">{user?.name ?? 'User'}</p>
+
+          <p className="truncate text-xs text-muted-foreground">{user?.email ?? ''}</p>
+        </div>
+
+        <DropdownMenuSeparator />
+
+        <DropdownMenuItem onClick={() => router.push('/profile')} className="rounded-lg">
           <User className="mr-2 h-4 w-4" />
           Profile
         </DropdownMenuItem>
 
-        <DropdownMenuItem onClick={() => router.push('/settings')}>
+        <DropdownMenuItem onClick={() => router.push('/settings')} className="rounded-lg">
           <Settings className="mr-2 h-4 w-4" />
           Settings
         </DropdownMenuItem>
 
         <DropdownMenuSeparator />
 
-        <DropdownMenuItem onClick={handleLogout} className="text-red-600">
+        <DropdownMenuItem
+          onClick={handleLogout}
+          className="
+            rounded-lg
+            text-red-500
+            focus:bg-red-500/10
+            focus:text-red-500
+          "
+        >
           <LogOut className="mr-2 h-4 w-4" />
           Logout
         </DropdownMenuItem>

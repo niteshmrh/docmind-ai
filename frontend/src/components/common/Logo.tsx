@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Sparkles } from 'lucide-react';
+import { BrainCircuit } from 'lucide-react';
 
 interface LogoProps {
   href?: string;
@@ -7,16 +7,28 @@ interface LogoProps {
 
 export default function Logo({ href = '/' }: LogoProps) {
   return (
-    <Link href={href} className="flex items-center gap-3">
-      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-violet-600 to-blue-600 shadow-lg shadow-violet-600/20">
-        <Sparkles className="h-5 w-5 text-white" />
+    <Link href={href} className="group flex min-w-0 items-center gap-3">
+      <div
+        className="
+          flex h-10 w-10 shrink-0 items-center justify-center
+          rounded-xl
+          bg-primary/10
+          text-primary
+          ring-1 ring-primary/20
+          transition-all duration-200
+          group-hover:bg-primary/15
+          group-hover:shadow-lg
+          group-hover:shadow-primary/20
+        "
+      >
+        <BrainCircuit className="h-6 w-6" />
       </div>
 
-      <div>
-        <div className="text-lg font-bold tracking-tight">DocMind AI</div>
+      <div className="min-w-0">
+        <div className="truncate text-lg font-bold tracking-tight">DocMind AI</div>
 
-        <div className="text-[9px] uppercase tracking-[0.22em] text-muted-foreground">
-          Intelligent Documents
+        <div className="truncate text-[10px] font-medium text-muted-foreground">
+          AI Knowledge Assistant
         </div>
       </div>
     </Link>

@@ -1,22 +1,47 @@
 export const theme = {
   colors: {
-    primary: 'violet',
-    secondary: 'blue',
-  },
+    dark: {
+      background: '#0a0a0a',
+      surface: '#111111',
+      card: '#171717',
+      elevated: '#1d1d1d',
+      border: '#292929',
+      muted: '#a1a1aa',
+      foreground: '#fafafa',
+    },
 
-  gradients: {
-    primary: 'from-violet-600 via-fuchsia-500 to-blue-600',
-    text: 'from-violet-400 via-fuchsia-400 to-blue-400',
-    background: 'from-violet-600/20 via-fuchsia-500/10 to-blue-600/20',
+    light: {
+      background: '#f7f7f5',
+      surface: '#ffffff',
+      card: '#ffffff',
+      elevated: '#f1f1ef',
+      border: '#e5e5e2',
+      muted: '#71717a',
+      foreground: '#171717',
+    },
+
+    success: '#22c55e',
+    danger: '#ef4444',
+    warning: '#eab308',
   },
 
   radius: {
-    card: 'rounded-3xl',
-    button: 'rounded-xl',
-    input: 'rounded-xl',
+    sm: 'rounded-lg',
+    md: 'rounded-xl',
+    lg: 'rounded-2xl',
+    xl: 'rounded-3xl',
+    full: 'rounded-full',
   },
 
+  transition: 'transition-all duration-200 ease-out',
+
   shadow: {
-    glow: 'shadow-violet-600/20',
+    card: 'shadow-sm',
+    elevated: 'shadow-lg',
+  },
+
+  layout: {
+    sidebarWidth: 'w-64',
+    headerHeight: 'h-16',
   },
 } as const;
