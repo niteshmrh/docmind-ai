@@ -2,6 +2,7 @@ import { Router } from "express";
 
 import ChatHistoryController from "../Controllers/ChatHistoryController.js";
 import authMiddleware from "../Middlewares/auth.middleware.js";
+import { chatRateLimiter } from "../Middlewares/rateLimit.middleware.js";
 
 const router = Router();
 
@@ -13,6 +14,11 @@ router.delete(
   authMiddleware,
   ChatHistoryController.deleteSession,
 );
-router.post("/message", authMiddleware, ChatHistoryController.sendMessage);
+router.post(
+  "/message",
+  authMiddleware,
+  chatRateLimiter,
+  ChatHistoryController.sendMessage,
+);
 
 export default router;
