@@ -29,6 +29,7 @@ app.use(
   }),
 );
 
+// Health Check
 app.get("/healthz", (req, res) => {
   return customResponse.success(req, res, {
     statusCode: HTTP_STATUS.OK,
@@ -41,6 +42,7 @@ app.get("/healthz", (req, res) => {
   });
 });
 
+// Application URL
 app.use("/docmind-ai", routes);
 
 // Always last
