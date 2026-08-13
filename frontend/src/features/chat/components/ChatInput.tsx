@@ -36,15 +36,43 @@ export default function ChatInput({ onSend, disabled = false }: ChatInputProps) 
   }
 
   return (
-    <div className="border-t bg-background px-4 py-4 md:px-6">
+    <div className="border-t border-border bg-background/80 px-4 py-4 backdrop-blur md:px-6">
       <form onSubmit={handleSubmit} className="mx-auto max-w-4xl">
-        <div className="flex items-end gap-2 rounded-xl border bg-muted/30 p-2 focus-within:border-primary/50">
+        <div
+          className="
+          flex
+          items-end
+          gap-2
+          rounded-2xl
+          border
+          border-border
+          bg-card
+          p-2
+          shadow-sm
+
+          transition-colors
+          focus-within:border-primary/40
+          focus-within:ring-2
+          focus-within:ring-primary/10
+        "
+        >
           <Textarea
             value={question}
             onChange={(event) => setQuestion(event.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Ask something about your document..."
-            className="min-h-[44px] max-h-40 resize-none border-0 bg-transparent shadow-none focus-visible:ring-0"
+            className="
+            min-h-[44px]
+            max-h-40
+            resize-none
+            border-0
+            bg-transparent
+            px-3
+            py-2.5
+            text-sm
+            shadow-none
+            focus-visible:ring-0
+          "
             disabled={disabled}
             rows={1}
           />
@@ -52,7 +80,7 @@ export default function ChatInput({ onSend, disabled = false }: ChatInputProps) 
           <Button
             type="submit"
             size="icon"
-            className="shrink-0"
+            className="h-10 w-10 shrink-0 rounded-xl"
             disabled={disabled || !question.trim()}
           >
             <Send className="h-4 w-4" />
@@ -60,10 +88,42 @@ export default function ChatInput({ onSend, disabled = false }: ChatInputProps) 
           </Button>
         </div>
 
-        <p className="mt-2 text-center text-xs text-muted-foreground">
+        <p className="mt-2 text-center text-[10px] text-muted-foreground">
           Enter to send · Shift + Enter for a new line
         </p>
       </form>
     </div>
   );
 }
+
+// return (
+//   <div className="border-t bg-background px-4 py-4 md:px-6">
+//     <form onSubmit={handleSubmit} className="mx-auto max-w-4xl">
+//       <div className="flex items-end gap-2 rounded-xl border bg-muted/30 p-2 focus-within:border-primary/50">
+//         <Textarea
+//           value={question}
+//           onChange={(event) => setQuestion(event.target.value)}
+//           onKeyDown={handleKeyDown}
+//           placeholder="Ask something about your document..."
+//           className="min-h-[44px] max-h-40 resize-none border-0 bg-transparent shadow-none focus-visible:ring-0"
+//           disabled={disabled}
+//           rows={1}
+//         />
+
+//         <Button
+//           type="submit"
+//           size="icon"
+//           className="shrink-0"
+//           disabled={disabled || !question.trim()}
+//         >
+//           <Send className="h-4 w-4" />
+//           <span className="sr-only">Send message</span>
+//         </Button>
+//       </div>
+
+//       <p className="mt-2 text-center text-xs text-muted-foreground">
+//         Enter to send · Shift + Enter for a new line
+//       </p>
+//     </form>
+//   </div>
+// );
