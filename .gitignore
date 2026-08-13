@@ -57,3 +57,24 @@ Thumbs.db
 skills-lock.json
 AGENTS.md
 CLAUDE.md
+
+
+
+.env
+.env.local
+.env.*.local
+node_modules/
+.next/
+dist/
+uploads/
+
+
+# Next.js
+frontend/.next/
+frontend/out/
+
+# Build output
+backend/dist/
+
+# Uploaded files
+backend/storage/uploads/

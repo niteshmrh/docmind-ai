@@ -2,7 +2,8 @@ version: "3.9"
 
 services:
   postgres:
-    image: postgres:17-alpine
+    # image: postgres:17-alpine
+    image: pgvector/pgvector:pg17
     container_name: docmind-postgres
 
     restart: unless-stopped
